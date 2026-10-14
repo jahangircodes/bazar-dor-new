@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -23,24 +24,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const savedUser = localStorage.getItem('bazardor_user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
+        try {
+            const savedUser = localStorage.getItem('bazardor_user');
+
+            if (savedUser) {
+                setUser(JSON.parse(savedUser));
+            }
+        } catch {
+            localStorage.removeItem('bazardor_user');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }, []);
 
     const login = (name: string, email: string) => {
         const userData = { name, email };
         setUser(userData);
         localStorage.setItem('bazardor_user', JSON.stringify(userData));
-        toast.success(`স্বাগতম, ${name}! সফলভাবে সাইন ইন হয়েছে।`, { position: 'top-center' });
+        toast.success(`স্বাগতম, ${name}! সফলভাবে সাইন ইন হয়েছে।`);
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('bazardor_user');
-        toast.success('সফলভাবে সাইন আউট করা হয়েছে।', { position: 'top-center' });
+        toast.success('সফলভাবে সাইন আউট করা হয়েছে।');
     };
 
     const updateProfile = (newName: string) => {
@@ -48,12 +55,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const updated = { ...user, name: newName };
             setUser(updated);
             localStorage.setItem('bazardor_user', JSON.stringify(updated));
-            toast.success('প্রোফাইল তথ্য সফলভাবে আপডেট করা হয়েছে!', { position: 'top-center' });
+            toast.success('প্রোফাইল তথ্য সফলভাবে আপডেট করা হয়েছে!');
         }
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, updateProfile }}>
+        <AuthContext.Provider
+            value={{ user, loading, login, logout, updateProfile }}
+        >
             {children}
         </AuthContext.Provider>
     );
@@ -61,8 +70,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
     const context = useContext(AuthContext);
+
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
+
     return context;
 }

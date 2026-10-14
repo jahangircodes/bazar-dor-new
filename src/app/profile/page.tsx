@@ -7,21 +7,19 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export default function ProfilePage() {
-    const { user, loading, updateProfile, signout } = useAuth();
+    const { user, updateProfile, logout } = useAuth();
     const router = useRouter();
     const [name, setName] = useState('');
 
     useEffect(() => {
-        if (!loading) {
-            if (!user) {
-                router.push('/signin');
-            } else if (name === '') {
-                setName(user.name);
-            }
+        if (!user) {
+            router.push('/signin');
+        } else if (name === '') {
+            setName(user.name);
         }
-    }, [user, loading, router, name]);
+    }, [user, router, name]);
 
-    if (loading || !user) {
+    if (!user) {
         return (
             <div className="max-w-7xl mx-auto px-4 py-24 text-center">
                 <p className="text-gray-500">লোড হচ্ছে...</p>
@@ -68,7 +66,10 @@ export default function ProfilePage() {
                 </div>
 
                 <button
-                    onClick={signout}
+                    onClick={() => {
+                        logout();
+                        router.push('/signin');
+                    }}
                     className="w-full sm:w-auto px-5 py-2.5 border border-red-200 hover:border-red-300 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-sm font-medium transition text-center"
                 >
                     সাইন আউট

@@ -1,6 +1,6 @@
 import SortDropdown from '@/components/SortDropdown';
 import { getCategories, getProductsByCategory, toBengaliNumber } from '@/lib/api';
-import { Product } from '@/types/product';
+import type { Product } from '@/types/product';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 

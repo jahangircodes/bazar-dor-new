@@ -1,6 +1,6 @@
 import { getProducts, toBengaliNumber } from '@/lib/api';
 import { getBanglaDate } from '@/lib/date';
-import { Product } from '@/types/product';
+import type { Product } from '@/types/product';
 import Image from 'next/image';
 import Link from 'next/link';
 
