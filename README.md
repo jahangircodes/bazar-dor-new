@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 BazarDor (বাজার দর) - Daily Market Price Tracker
 
-## Getting Started
+**BazarDor** is a modern price-tracking web application designed to help users track and monitor daily commodity prices in Bangladesh. Built with a fast, intuitive, and fully responsive Bengali user interface, it provides real-time market insights, daily price fluctuations, and category-wise product filtering.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
+- **Library:** [React 19](https://react.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **State & Auth Management:** React Context API (`AuthContext`)
+- **Notifications:** [React Hot Toast](https://react-hot-toast.com/)
+- **Language:** TypeScript
+- **Icons & Assets:** Native Emojis & Custom Graphics
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Key Features
 
-## Learn More
+1. **📊 Real-time Commodity Tracking:** View today's prices alongside comparative metrics (minimum, maximum, average) and percentage price changes (risers & fallers).
+2. **🏷️ Category-Based Filtering:** Seamlessly browse products categorized into Rice, Pulses, Oil, Vegetables, Fish, Meat, Eggs/Milk, and Spices.
+3. **🔢 Bengali Localization (`toBengaliNumber`):** Built-in defensive number conversion logic for flawless Bengali numeral formatting across all prices and stats.
+4. **🔒 Protected Auth & Profile Management:** LocalStorage-persisted authentication flow featuring custom profile updates and seamless background redirects for unauthenticated users.
+5. **📱 Fully Responsive Design:** Optimized UI layouts tailored for smooth user experience across mobile, tablet, and desktop devices.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+├── app/
+│   ├── category/
+│   │   └── [slug]/
+│   │       └── page.tsx        # Category-wise product listing
+│   ├── product/
+│   │   └── [id]/
+│   │       ├── loading.tsx
+│   │       ├── not-found.tsx
+│   │       └── page.tsx        # Protected product details page
+│   ├── profile/
+│   │   └── page.tsx            # User profile update page
+│   ├── signin/
+│   │   └── page.tsx            # Sign in page
+│   ├── signup/
+│   │   └── page.tsx            # Sign up page
+│   ├── error.tsx               # Global error boundary
+│   ├── layout.tsx              # Root layout
+│   ├── page.tsx                # Homepage
+│   └── providers.tsx           # Global context providers
+├── components/
+│   ├── Navbar.tsx              # Sticky navbar with marquee ticker & dropdown
+│   └── SortDropdown.tsx        # Dynamic price sorting component
+├── context/
+│   └── AuthContext.tsx         # User authentication state
+├── lib/
+│   ├── api.ts                  # API fetching & Bengali number conversion logic
+│   └── date.ts                 # Bengali date formatter
+└── types/
+    └── product.ts              # TypeScript interfaces
